@@ -1,7 +1,7 @@
 var DirtyBit = require('../lib/index')
   , test = require('tape')
 
-test('filters', function(t) {
+test('lookup and deregister', function(t) {
   var val = {}
 
   val.a = {}
@@ -10,18 +10,22 @@ test('filters', function(t) {
 
   var instance = DirtyBit(val)
 
-  t.plan(6)
+  t.plan(7)
 
   instance.register('a.b - a.c', function(val) {
-    t.strictEqual(val, 5)
+    t.equal(val, 5)
   })
 
   instance.register('a.b.length', function(val) {
-    t.strictEqual(val, 3)
+    t.equal(val, 3)
   })
 
   instance.register('((a.c - a.b) + "").length', function(val) {
-    t.strictEqual(val, 2)
+    t.equal(val, 2)
+  })
+
+  instance.register('this.a.b', function(val) {
+    t.equal(val, '100')
   })
 
   instance.register('a.e + a.f', dereg)

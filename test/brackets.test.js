@@ -1,7 +1,7 @@
 var DirtyBit = require('../lib/index')({a: '01', b: [2, 3]})
   , test = require('tape')
 
-test('filters', function(t) {
+test('brackets', function(t) {
   t.plan(2)
 
   DirtyBit.register('b[a[1]]', function(val) {

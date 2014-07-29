@@ -1,7 +1,7 @@
 var split = require('../lib/split.js')
   , test = require('tape')
 
-test(function(t) {
+test('split', function(t) {
   t.deepEqual(
       split('a,b([,],c),d', ',')
     , ['a', 'b([,],c),d']
