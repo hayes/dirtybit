@@ -1,0 +1,31 @@
+{
+  "name": "dirtybit",
+  "version": "0.0.0",
+  "description": "dirtybit ========",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node ./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hayes/dirtybit.git"
+  },
+  "keywords": [
+    "dirty",
+    "tracking",
+    "checking",
+    "altr"
+  ],
+  "author": "Michael Hayes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hayes/dirtybit/issues"
+  },
+  "homepage": "https://github.com/hayes/dirtybit",
+  "dependencies": {
+    "tape": "^2.13.4"
+  }
+}
