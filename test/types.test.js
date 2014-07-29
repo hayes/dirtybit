@@ -1,4 +1,4 @@
-var accessor = require('../index')()
+var accessor = require('../lib/index')()
   , test = require('tape')
 
 test('types', function(t) {

@@ -1,4 +1,4 @@
-var DirtyBit = require('../index')
+var DirtyBit = require('../lib/index')
   , test = require('tape')
 
 test('filters', function(t) {

@@ -1,4 +1,4 @@
-var split = require('../split.js')
+var split = require('../lib/split.js')
   , test = require('tape')
 
 test(function(t) {

@@ -1,4 +1,4 @@
-var accessor = require('../index')({b: {a: 1}, d: new Object, e: Object})
+var accessor = require('../lib/index')({b: {a: 1}, d: new Object, e: Object})
   , test = require('tape')
 
 test('ternary operator', function(t) {

@@ -2,7 +2,7 @@
   "name": "dirtybit",
   "version": "0.0.0",
   "description": "dirtybit ========",
-  "main": "index.js",
+  "main": "lib/index.js",
   "directories": {
     "test": "test"
   },

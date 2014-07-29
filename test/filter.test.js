@@ -1,4 +1,4 @@
-var dirtyBit = require('../index')()
+var dirtyBit = require('../lib/index')()
   , test = require('tape')
 
 dirtyBit.addFilter('double', double)
