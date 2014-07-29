@@ -19,7 +19,7 @@ dirtyBit starts by breaking your expressions down into 6 basics types:
 * keypaths
 * filters
 * operators
-* parens
+* parentheses
 * brackets
 
 Each of these is explained in more detail below. Each of these components (except litterals) can depend on one or more sub components. Any component that is shared by multiple expressions will only be evaluated once when its dependencies change.
@@ -86,6 +86,11 @@ accessors.addFilter('pow', function(args, change) {
 
 accessors.register('pow(pow(2, 2), 2)', console.log) // logs 16
 ```
+### Parentheses
+dirtyBit follows javascripts order of operations, you can use parentheses to ensure that operators and lookups are applied in the exprected way. `(5 * (10 - 3)) + 7` would evaluate to `42`.  Parentheses will work correctly in combination with any other expression type. for example `('abc' + 123).legnth === 6` would be true.
+
+### Brackets
+Bracket notation for accessing properies works as expected. `("abc")[2]` would evaluate to `"c"`.  Again brackets will work in combination with any of the other expressions.
 
 ### API
 ##### `dirtyBit(state, options)` -> instance
