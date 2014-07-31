@@ -7,24 +7,32 @@ test('split', function(t) {
     , ['a', 'b([,],c),d']
   )
   t.deepEqual(
-      split('a,b([,],c),d', ',', ['[', ']'])
+      split('a,b([,],c),d', ',', true)
+    , ['a', 'b([,],c)', 'd']
+  )
+  t.deepEqual(
+      split('a,b([,],c),d', ',', false, ['[', ']'])
     , ['a', 'b([,],c),d']
   )
   t.deepEqual(
-      split('a,b([,],c),d', ',', [['[', ']']], true)
+      split('a,b([,],c),d', ',', true, [['[', ']']])
     , ['a', 'b([,]','c)','d']
   )
   t.deepEqual(
-      split('a,b([,],c),d', ',', [['[', ']'], ['(', ')']], true)
+      split('a,b([,],c),d', ',', true, [['[', ']'], ['(', ')']])
     , ['a', 'b([,],c)','d']
   )
   t.deepEqual(
-      split('a,b{([,],c),d}', ',', null, true)
+      split('a,b{([,],c),d}', ',', true)
     , ['a', 'b{([,],c)', 'd}']
   )
   t.deepEqual(
-      split('a ? b : c : d ? e : f', ':', [['?', ':']], true)
+      split('a ? b : c : d ? e : f', ':', true, [['?', ':']])
     , ['a ? b : c ', ' d ? e : f']
+  )
+  t.deepEqual(
+      split('"(","]",(,)', ',', true)
+    , ['"("','"]"', '(,)']
   )
   t.end()
 })
