@@ -1,6 +1,6 @@
 {
   "name": "dirtybit",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "dirtybit ========",
   "main": "lib/index.js",
   "directories": {
