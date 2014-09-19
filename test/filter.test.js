@@ -19,15 +19,15 @@ function pow(change) {
 test('filters', function(t) {
   t.plan(3)
 
-  dirtyBit.register('double(5)', function(val) {
+  dirtyBit.on('double(5)', function(val) {
     t.strictEqual(val, 10)
   })
 
-  dirtyBit.register('double(double(5)) + 1', function(val) {
+  dirtyBit.on('double(double(5)) + 1', function(val) {
     t.strictEqual(val, 21)
   })
 
-  dirtyBit.register('pow(2, 3)', function(val) {
+  dirtyBit.on('pow(2, 3)', function(val) {
     t.strictEqual(val, 8)
   })
 })

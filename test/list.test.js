@@ -6,20 +6,26 @@ test('list', function(t) {
 
   var instance = dirtybit({a: 5, b: 10, c: 15})
 
-  instance.register('a, b, c', function() {
-    t.deepEqual(Array.prototype.slice.call(arguments), [5, 10, 15])
+  instance.on('[a, b, c]', function(list) {
+    t.deepEqual(list, [5, 10, 15])
   })
 })
 
 test('deregister list', function(t) {
-  t.plan(1)
+  t.plan(3)
 
-  var instance = dirtybit({a: 5, b: 10, c: 15})
+  var instance = dirtybit()
 
-  instance.register('a, b, c', callback)
-  instance.deregister('a, b, c', callback)
+  instance.on('[a, b, c]', callback)
+  instance.removeListener('[a, b, c]', callback)
 
-  t.deepEqual(instance._events, {})
+  t.deepEqual(instance.handlers, {})
+  t.deepEqual(instance.handlerList, [])
+
+  var expressions = {}
+
+  expressions['this'] = instance.expressions['this']
+  t.deepEqual(instance.expressions, expressions)
 
   function callback() {}
 })

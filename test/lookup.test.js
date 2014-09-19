@@ -10,30 +10,32 @@ test('lookup and deregister', function(t) {
 
   var instance = DirtyBit(val)
 
-  t.plan(7)
+  t.plan(9)
 
-  instance.register('a.b - a.c', function(val) {
+  instance.on('a.b - a.c', function(val) {
     t.equal(val, 5)
   })
 
-  instance.register('a.b.length', function(val) {
+  instance.on('a.b.length', function(val) {
     t.equal(val, 3)
   })
 
-  instance.register('((a.c - a.b) + "").length', function(val) {
+  instance.on('((a.c - a.b) + "").length', function(val) {
     t.equal(val, 2)
   })
 
-  instance.register('this.a.b', function(val) {
+  instance.on('this.a.b', function(val) {
     t.equal(val, '100')
   })
 
-  instance.register('a.e + a.f', dereg)
-  instance.deregister('a.e + a.f', dereg)
+  instance.on('a.e + a.f', dereg)
+  instance.removeListener('a.e + a.f', dereg)
 
-  t.notOk(instance.events._events['a.e'])
-  t.notOk(instance.events._events['a.f'])
-  t.notOk(instance._events['a.e + a.f'])
+  t.notOk(instance.expressions['a.e'])
+  t.notOk(instance.expressions['a.f'])
+  t.notOk(instance.expressions['a.e + a.f'])
+  t.notOk(instance.handlers['a.e + a.f'])
+  t.equal(instance.handlerList.indexOf('a.e + a.f'), -1)
 
   function dereg() {}
 })

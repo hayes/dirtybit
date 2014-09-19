@@ -7,7 +7,7 @@ expressions.
 ```javascript
 var dirtyBit = new require('dirtybit')()
 
-dirtybit.register('a.b + 5', function(val) {
+dirtybit.on('a.b + 5', function(val) {
   console.log(val)
 })
 
@@ -37,13 +37,13 @@ always return the instances current state object.
 ```javascript
 var dirtyBit = new require('dirtybit')()
 
-dirtybit.register('5', function(val) {
+dirtybit.on('5', function(val) {
   console.log(val) // logs `5`
 })
-dirtybit.register('"abc"', function(val) {
+dirtybit.on('"abc"', function(val) {
   console.log(val) // logs `abc`
 })
-dirtybit.register('true', function(val) {
+dirtybit.on('true', function(val) {
   console.log(val) // logs `true`
 })
 ```
@@ -86,19 +86,19 @@ dirtyBit.addFilter('double', function(args, change) {
   }
 })
 
-accessors.register('double(5)', console.log) //logs 10
-accessors.register('double(double(5))', console.log) //logs 20
+instance.on('double(5)', console.log) //logs 10
+instance.on('double(double(5))', console.log) //logs 20
 ```
 
 ###### to add a filter that uses Math.pow
 ```
-accessors.addFilter('pow', function(args, change) {
+instance.addFilter('pow', function(args, change) {
   return function(n, x) {
     change(Match.pow(n, x))
   }
 })
 
-accessors.register('pow(pow(2, 2), 2)', console.log) // logs 16
+instance.on('pow(pow(2, 2), 2)', console.log) // logs 16
 ```
 ### Parentheses
 dirtyBit follows javascripts order of operations, you can use parentheses to
@@ -119,9 +119,9 @@ other expressions.
   * filters: an abjenct mapping filter names to filter constructor functions
   * rootKey: a value that will access the current state, defaults to `'this'`
 
-creates an accessors instance.
+creates an dirtybit instance.
 
-##### `instance.register(expression, callback, all, dep_of)`
+##### `instance.on(expression, callback, all, dep_of)`
 * exression: the expression to track
 * callback: the function to call when the expression is updated
 * all: if true, the callback will be called any time the sate updates even if
@@ -132,8 +132,8 @@ this registers a new expression to track.  Whenever its value changes, the
 callback will be called. The callback will also be called with the expressions
 initial value when it was added.
 
-##### `instance.deregister(expression, callback)`
-* exression: the expression to deregister
+##### `instance.removeListener(expression, callback)`
+* exression: the expression to stop listinging for
 * callback: the callback passed in when the expression was registered
 
 this will stop tracking the expression (provided there were no other handlers
