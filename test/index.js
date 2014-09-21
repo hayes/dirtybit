@@ -1,5 +1,6 @@
 require('./operators.test.js')
 require('./brackets.test.js')
+require('./changes.test.js')
 require('./filter.test.js')
 require('./lookup.test.js')
 require('./types.test.js')
