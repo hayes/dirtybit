@@ -12,8 +12,8 @@ test('change', function(t) {
   })
 
   instance.state.a.push(count)
-  instance.update(instance.state)
+  //instance.update(instance.state)
 
   instance.state.a.push(count)
-  instance.update(instance.state)
+  //instance.update(instance.state)
 })

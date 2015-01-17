@@ -1,12 +1,12 @@
 var dirtyBit = require('../lib/index')()
   , test = require('tape')
 
-dirtyBit.addFilter('double', double)
-dirtyBit.addFilter('pow', pow)
+dirtyBit.addHelper('double', double)
+dirtyBit.addHelper('pow', pow)
 
 function double(change) {
   return function(n) {
-    change(2 * n)
+    setTimeout(function() {change(2 * n)}, 100)
   }
 }
 
@@ -16,14 +16,16 @@ function pow(change) {
   }
 }
 
-test('filters', function(t) {
+test('helpers', function(t) {
   t.plan(3)
 
   dirtyBit.on('double(5)', function(val) {
+    if(typeof val === 'undefined' || isNaN(val)) return
     t.strictEqual(val, 10)
   })
 
   dirtyBit.on('double(double(5)) + 1', function(val) {
+    if(typeof val === 'undefined' || isNaN(val)) return
     t.strictEqual(val, 21)
   })
 

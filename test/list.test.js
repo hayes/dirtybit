@@ -19,8 +19,8 @@ test('deregister list', function(t) {
   instance.on('[a, b, c]', callback)
   instance.removeListener('[a, b, c]', callback)
 
-  t.deepEqual(instance.handlers, {})
-  t.deepEqual(instance.handlerList, [])
+  t.deepEqual(instance.handlers, { this: [] })
+  t.deepEqual(instance.handlerList, ['this'])
 
   var expressions = {}
 
