@@ -1,5 +1,5 @@
 var accessor = require('../lib/index')({b: {a: 1}, d: new Object, e: Object})
-  , test = require('tape')
+var test = require('tape')
 
 test('ternary operator', function(t) {
   t.plan(3)

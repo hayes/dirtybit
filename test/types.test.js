@@ -1,5 +1,5 @@
 var accessor = require('../lib/index')()
-  , test = require('tape')
+var test = require('tape')
 
 test('types', function(t) {
   t.plan(8)

@@ -1,5 +1,5 @@
 var dirtybit = require('../lib/index')({a: '01', b: [2, 3]})
-  , test = require('tape')
+var test = require('tape')
 
 test('brackets', function(t) {
   t.plan(2)

@@ -1,5 +1,5 @@
 var dirtyBit = require('../lib/index')()
-  , test = require('tape')
+var test = require('tape')
 
 dirtyBit.addHelper('double', double)
 dirtyBit.addHelper('pow', pow)

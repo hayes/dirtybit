@@ -1,5 +1,5 @@
 var dirtybit = require('../lib/index')
-  , test = require('tape')
+var test = require('tape')
 
 test('list', function(t) {
   t.plan(1)
@@ -19,13 +19,13 @@ test('deregister list', function(t) {
   instance.on('[a, b, c]', callback)
   instance.removeListener('[a, b, c]', callback)
 
-  t.deepEqual(instance.handlers, { this: [] })
-  t.deepEqual(instance.handlerList, ['this'])
+  var root = instance.expressions.map.this
+  var map = {'this': root}
+  var watched = []
 
-  var expressions = {}
-
-  expressions['this'] = instance.expressions['this']
-  t.deepEqual(instance.expressions, expressions)
+  t.deepEqual(instance.watched, watched)
+  t.deepEqual(instance.handlers, {})
+  t.deepEqual(instance.expressions, {map: map, list: []})
 
   function callback() {}
 })

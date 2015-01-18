@@ -1,5 +1,5 @@
 var DirtyBit = require('../lib/index')
-  , test = require('tape')
+var test = require('tape')
 
 test('lookup and deregister', function(t) {
   var val = {}
@@ -8,9 +8,9 @@ test('lookup and deregister', function(t) {
   val.a.b = '100'
   val.a.c = 95
 
-  var instance = DirtyBit(val)
+  var instance = new DirtyBit(val)
 
-  t.plan(9)
+  t.plan(8)
 
   instance.on('a.b - a.c', function(val) {
     t.equal(val, 5)
@@ -31,11 +31,10 @@ test('lookup and deregister', function(t) {
   instance.on('a.e + a.f', dereg)
   instance.removeListener('a.e + a.f', dereg)
 
-  t.notOk(instance.expressions['a.e'])
-  t.notOk(instance.expressions['a.f'])
-  t.notOk(instance.expressions['a.e + a.f'])
+  t.notOk(instance.expressions.map['a.e'])
+  t.notOk(instance.expressions.map['a.f'])
+  t.notOk(instance.expressions.map['a.e + a.f'])
   t.notOk(instance.handlers['a.e + a.f'])
-  t.equal(instance.handlerList.indexOf('a.e + a.f'), -1)
 
   function dereg() {}
 })

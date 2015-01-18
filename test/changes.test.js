@@ -1,5 +1,5 @@
 var dirtybit = require('../lib/index')
-  , test = require('tape')
+var test = require('tape')
 
 test('change', function(t) {
   t.plan(3)
@@ -12,8 +12,8 @@ test('change', function(t) {
   })
 
   instance.state.a.push(count)
-  //instance.update(instance.state)
+  instance.update(instance.state)
 
   instance.state.a.push(count)
-  //instance.update(instance.state)
+  instance.update(instance.state)
 })
