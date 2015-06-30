@@ -1,13 +1,13 @@
-var dirtybit = require('../lib/index')
+var dirtybit = require('../')
 var test = require('tape')
 
-test('change', function(t) {
+test('change', function (t) {
   t.plan(3)
 
   var instance = dirtybit({a: []})
   var count = 0
 
-  instance.on('a', function(list) {
+  instance.on('a', function (list) {
     t.equal(list.length, count++)
   })
 
