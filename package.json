@@ -1,13 +1,14 @@
 {
   "name": "dirtybit",
   "version": "1.0.0",
-  "description": "dirtybit ========",
+  "description": "dirty checking for javascipt like expressions",
   "main": "lib/index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "node ./test"
+    "test": "npm run lint && node ./test",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
