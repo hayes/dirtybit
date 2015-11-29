@@ -6,7 +6,7 @@ dirtyBit.addHelper('pow', pow)
 
 function double (change) {
   return function (n) {
-    setTimeout(function () {change(2 * n)}, 100)
+    setTimeout(function () { change(2 * n) }, 100)
   }
 }
 
@@ -30,7 +30,7 @@ test('helpers', function (t) {
   })
 
   dirtyBit.on('pow(2, 3)', function (val) {
-    if (!val) throw new Error
+    if (!val) throw new Error()
     t.strictEqual(val, 8)
   })
 })
