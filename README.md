@@ -1,7 +1,7 @@
 # dirtyBit
 
 track changes to an expressions value using dirty checking. dirtyBit breaks
-your expressions into small automic peices which can be shared across many
+your expressions into small automatic pieces which can be shared across many
 expressions.
 
 ```javascript
@@ -17,21 +17,21 @@ dirtybit.update({a: {b: '5'}}) // logs 55
 ```
 ### The Basics
 dirtyBit starts by breaking your expressions down into 6 basics types:
-* litterals
+* literals
 * keypaths
-* filters
+* helpers
 * operators
 * parentheses
 * brackets
 
 Each of these is explained in more detail below. Each of these components
-(except litterals) can depend on one or more sub components. Any component that
+(except literals) can depend on one or more sub components. Any component that
 is shared by multiple expressions will only be evaluated once when its
 dependencies change.
 
-### Litterals
-There are 4 backed in litterals `null`, `undefined`, `true` and `false`. ontop
-of these dirtybit also supports `string` and `number` litterals. `this` will
+### Literals
+There are 4 backed in literals `null`, `undefined`, `true` and `false`. on top
+of these dirtybit also supports `string` and `number` literals. `this` will
 always return the instances current state object.
 
 ```javascript
@@ -58,8 +58,8 @@ path is any express that follows the following pattern:
 could be a number: `5.constructor` or it could be another key path: `a.b.c`.
 
 ### Operators
-dirtyBit supports most of javascripts operators with a couple exceptions:
- * assingments (`=`, `+=`, etc)
+dirtyBit supports most of javascript's operators with a couple exceptions:
+ * assignments (`=`, `+=`, etc)
  * increments (`++`, `--`)
  * bitshift (`>>>`, `<<<`) (all other bitwise operators are supported)
 
@@ -68,19 +68,19 @@ Operators have 3 forms:
 * binary: `{expression} {operator} {expression}`
 * unary: `{operator}{expression}`
 
-### Filters
-filters are user defined transforms on a set of expressions.  They follow the
-follwing format:
+### helpers
+helpers are user defined transforms on a set of expressions.  They follow the
+following format:
 ```
-filter_name({expression1}, {expression2}, {expressionN})
+helper_name({expression1}, {expression2}, {expressionN})
 ```
-Filters will be updated any time their arguments change, and they may call
-theie callback multiple times, and do not need to be synchronus.  This is
+helpers will be updated any time their arguments change, and they may call
+their callback multiple times, and do not need to be synchronus.  This is
 ideal for implementing easing transforms or doing asynchronus lookups.
 
-###### to add a filter that doubles a value:
+###### to add a helper that doubles a value:
 ```
-dirtyBit.addFilter('double', function(args, change) {
+dirtyBit.addHelper('double', function(change) {
   return function(n) {
     change(+n * 2)
   }
@@ -90,9 +90,9 @@ instance.on('double(5)', console.log) //logs 10
 instance.on('double(double(5))', console.log) //logs 20
 ```
 
-###### to add a filter that uses Math.pow
+###### to add a helper that uses Math.pow
 ```
-instance.addFilter('pow', function(args, change) {
+instance.addHelper('pow', function(change) {
   return function(n, x) {
     change(Match.pow(n, x))
   }
@@ -101,14 +101,14 @@ instance.addFilter('pow', function(args, change) {
 instance.on('pow(pow(2, 2), 2)', console.log) // logs 16
 ```
 ### Parentheses
-dirtyBit follows javascripts order of operations, you can use parentheses to
-ensure that operators and lookups are applied in the exprected way.
+dirtyBit follows javascript's order of operations, you can use parentheses to
+ensure that operators and lookups are applied in the expected way.
 `(5 * (10 - 3)) + 7` would evaluate to `42`.  Parentheses will work correctly
 in combination with any other expression type. for example
 `('abc' + 123).legnth === 6` would be true.
 
 ### Brackets
-Bracket notation for accessing properies works as expected. `("abc")[2]` would
+Bracket notation for accessing properties works as expected. `("abc")[2]` would
 evaluate to `"c"`.  Again brackets will work in combination with any of the
 other expressions.
 
@@ -116,35 +116,32 @@ other expressions.
 ##### `dirtyBit(state, options)` -> instance
 * state: initial state for the instance
 * options:
-  * filters: an abjenct mapping filter names to filter constructor functions
-  * rootKey: a value that will access the current state, defaults to `'this'`
+  * helpers: an object mapping helper names to helper constructor functions
 
 creates an dirtybit instance.
 
 ##### `instance.on(expression, callback, all, dep_of)`
-* exression: the expression to track
+* expression: the expression to track
 * callback: the function to call when the expression is updated
-* all: if true, the callback will be called any time the sate updates even if
-the expressions value did not.
-* dep_of: for internal use, indicates it is a dependency of another expression
 
 this registers a new expression to track.  Whenever its value changes, the
 callback will be called. The callback will also be called with the expressions
 initial value when it was added.
 
 ##### `instance.removeListener(expression, callback)`
-* exression: the expression to stop listinging for
+* expression: the expression to stop listening for
 * callback: the callback passed in when the expression was registered
 
 this will stop tracking the expression (provided there were no other handlers
 tracking it).  It will also deregister any dependencies that are no longer in
-use.
+use. If the callback is not provided, this will remove all callbacks for the
+given expression
 
-##### `instance.addFilter(name, constructor)`
-* name: name of the filter
-* constructor: a filter constructor function.
+##### `instance.addHelper(name, constructor)`
+* name: name of the helper
+* constructor: a helper constructor function.
 
-Adds a filter for use in expressions created by this insance. constructor
+Adds a helper for use in expressions created by this instance. constructor
 should implement the api below.
 
 ##### `instance.update(state)`
@@ -153,13 +150,12 @@ should implement the api below.
 This will evaluate your expressions against the new state, and call the handlers
 for any expressions that changed.
 
-###### `filter_constructor(change)` -> update
-* change: a callback to call anytime the filters result updates
+###### `helper_constructor(change)` -> update
+* change: a callback to call anytime the helpers result updates
 * update: will be called with the current values of the arguments it was passed.
 
-when update is called, the filter should look at the passed in value and call
-change with the filters result.
+when update is called, the helper should look at the passed in value and call
+change with the helpers result.
 
-The filter constructor will be called with the dirtyBit instance as its context
-so instance methods such as register and split will be avaialbe on `this`
-
+The helper constructor will be called with the dirtyBit instance as its context
+so instance methods such as register and split will be available on `this`
